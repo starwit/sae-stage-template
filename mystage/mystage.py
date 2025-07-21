@@ -1,8 +1,8 @@
 import logging
-from typing import Any, Dict, NamedTuple
+from typing import Any
 
 from prometheus_client import Counter, Histogram, Summary
-from visionapi.messages_pb2 import BoundingBox, SaeMessage
+from visionapi.sae_pb2 import SaeMessage
 
 from .config import MyStageConfig
 
