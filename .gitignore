@@ -5,5 +5,4 @@ __pycache__
 cache
 *.pt
 .vscode
-*.yaml
 !settings.template.yaml
