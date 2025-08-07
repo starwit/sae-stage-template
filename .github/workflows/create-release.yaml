@@ -52,7 +52,7 @@ jobs:
         run: |
           git config --global user.email "code@starwit.de"
           git config --global user.name "Starwit"
-          git remote set-url --push origin https://Starwit:$GITHUB_TOKEN@github.com/starwit/sae-my-stage.git
+          git remote set-url --push origin https://Starwit:$GITHUB_TOKEN@github.com/starwit/${{ env.IMAGE_NAME }}.git
           git add .
           modifications=$(git status | grep "modified" || true)
           if [ ! -z "$modifications" ]
@@ -64,16 +64,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build apt package
-        run: |
-            echo "Build APT package"
-            bash -c "poetry self add poetry-plugin-export; make build-deb"
-            echo "Finish building APT package"
-
       - name: Create github release
         run: | 
           APP_VERSION=$(cat pyproject.toml | grep "version" | head -1 | cut -d'=' -f2 | xargs echo -n) 
-          gh release create $APP_VERSION -F README.md --title "${APP_VERSION}" --target $(git branch --show-current) ./target/*deb ./target/*.dsc
+          gh release create $APP_VERSION -F README.md --title "${APP_VERSION}" --target $(git branch --show-current)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
