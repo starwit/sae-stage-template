@@ -16,7 +16,7 @@ pydantic-settings = "2.10.1"
 prometheus-client = "0.22.1"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "8.4.1"
+pytest = "8.4.2"
 
 [build-system]
 requires = ["poetry-core"]
