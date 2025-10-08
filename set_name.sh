@@ -30,7 +30,7 @@ echo "Setting name to $stage_name_ucc/$stage_name_lsc/$stage_name_ns/$stage_name
 sed -i "s/MyStage/$stage_name_ucc/" mystage/*.py
 sed -i "s/my_stage/$stage_name_lsc/" mystage/*.py
 sed -i "s/mystage/$stage_name_ns/" mystage/*.py pyproject.toml settings.template.yaml main.py
-sed -i "s/my-stage/$stage_name_kc/" docker_build.sh
+sed -i "s/my-stage/$stage_name_kc/" docker_build.sh .github/workflows/*.yaml
 mv mystage/ "$stage_name_ns/"
 mv "$stage_name_ns/mystage.py" "$stage_name_ns/$stage_name_ns.py"
 
