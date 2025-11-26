@@ -36,7 +36,7 @@ def redis_publisher_mock():
 def inject_consumer_messages():
     with patch('mystage.stage.RedisConsumer') as mock_consumer:
         def _inject_messages(messages):
-            mock_consumer.return_value.__enter__.return_value.__iter__.return_value = iter(messages)
+            mock_consumer.return_value.__enter__.return_value.return_value.__iter__.return_value = iter(messages)
         yield _inject_messages
 
 def test_example(set_config, redis_publisher_mock, inject_consumer_messages):

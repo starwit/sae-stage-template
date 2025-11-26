@@ -45,8 +45,8 @@ def run_stage():
                                  stream_keys=[f'{CONFIG.redis.input_stream_prefix}:{CONFIG.redis.stream_id}'])
     publish_ctx = RedisPublisher(CONFIG.redis.host, CONFIG.redis.port)
     
-    with consumer_ctx as consumer, publish_ctx as publish:
-        for stream_key, proto_data in consumer:
+    with consumer_ctx as iter_messages, publish_ctx as publish:
+        for stream_key, proto_data in iter_messages():
             if stop_event.is_set():
                 break
 
