@@ -41,12 +41,12 @@ def run_stage():
 
     my_stage = MyStage(CONFIG)
 
-    consume = RedisConsumer(CONFIG.redis.host, CONFIG.redis.port, 
-                            stream_keys=[f'{CONFIG.redis.input_stream_prefix}:{CONFIG.redis.stream_id}'])
-    publish = RedisPublisher(CONFIG.redis.host, CONFIG.redis.port)
+    consumer_ctx = RedisConsumer(CONFIG.redis.host, CONFIG.redis.port, 
+                                 stream_keys=[f'{CONFIG.redis.input_stream_prefix}:{CONFIG.redis.stream_id}'])
+    publish_ctx = RedisPublisher(CONFIG.redis.host, CONFIG.redis.port)
     
-    with consume, publish:
-        for stream_key, proto_data in consume():
+    with consumer_ctx as consumer, publish_ctx as publish:
+        for stream_key, proto_data in consumer:
             if stop_event.is_set():
                 break
 
