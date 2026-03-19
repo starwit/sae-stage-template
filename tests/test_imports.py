@@ -1,6 +1,6 @@
 import pytest
 
-def test_rediswriter_import():
+def test_mystage_import():
     try:
         from mystage.mystage import MyStage
     except ImportError as e:
