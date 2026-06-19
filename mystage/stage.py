@@ -3,8 +3,7 @@ import signal
 import threading
 
 from prometheus_client import Counter, Histogram, start_http_server
-from visionlib.pipeline.consumer import RedisConsumer
-from visionlib.pipeline.publisher import RedisPublisher
+from visionlib.pipeline import ValkeyConsumer, ValkeyPublisher
 
 from .config import MyStageConfig
 from .mystage import MyStage
@@ -41,9 +40,9 @@ def run_stage():
 
     my_stage = MyStage(CONFIG)
 
-    consumer_ctx = RedisConsumer(CONFIG.redis.host, CONFIG.redis.port, 
+    consumer_ctx = ValkeyConsumer(CONFIG.redis.host, CONFIG.redis.port, 
                                  stream_keys=[f'{CONFIG.redis.input_stream_prefix}:{CONFIG.redis.stream_id}'])
-    publish_ctx = RedisPublisher(CONFIG.redis.host, CONFIG.redis.port)
+    publish_ctx = ValkeyPublisher(CONFIG.redis.host, CONFIG.redis.port)
     
     with consumer_ctx as iter_messages, publish_ctx as publish:
         for stream_key, proto_data in iter_messages():
